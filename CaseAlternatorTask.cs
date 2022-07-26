@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Passwords
 {
@@ -17,15 +16,19 @@ namespace Passwords
         {
             if (startIndex == word.Length)
             {
-                result.Add(new string(word));
+                var completeWord = new string(word);
+                if (!result.Contains(completeWord))
+                    result.Add(completeWord);
                 return;
             }
 
-            for (int i = 0; i < word.Length; i++)
+            if (Char.IsLetter(word[startIndex]))
             {
-
+                word[startIndex] = Char.ToLower(word[startIndex]);
+                AlternateCharCases(word, startIndex + 1, result);
+                word[startIndex] = Char.ToUpper(word[startIndex]);
             }
-            
+            AlternateCharCases(word, startIndex + 1, result);
         }
     }
 }
